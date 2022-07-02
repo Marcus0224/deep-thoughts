@@ -29,7 +29,7 @@ db.once('open', () => {
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     // log where we can go test our GQL API
-    console.log9('USE GraphQL at http://localhost:${PORT{server.graphqlPath');
+    console.log('USE GraphQL at http://localhost:${PORT{server.graphqlPath');
   });
 });
 };
