@@ -25,12 +25,25 @@ const resolvers = {
             .populate('friends')
             .populate('thoughts');
         },
+
+        me: async (parent, args, context) => {
+            if (context.user) {
+            const userData = await User.findOne({ _id: context.user._id})
+            .select('__v -password')
+            .populate('thoughts')
+            .populate('friends');
+
+            return userData;
+        } 
+        // other queries remain the same
+        throw new AuthenticationError('Not logged in');
+        }
     },
 
     Mutation: {
         addUser: async (parent, args) => {
             const user = await User.create(args);
-            comst token = signToken(user);
+            const token = signToken(user);
 
             return { token, user };
         },
