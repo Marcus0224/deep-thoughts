@@ -1,18 +1,21 @@
 import { gql }  from '@apollo/client';
 
-export const QUERY_THOUGHT = gql`
-  query thought($id: ID!) {
-    thought(_id: $id) {
+export const QUERY_USER = gql`
+  query user($username: String!) {
+    user(username: $username) {
       _id
-      thoughtText
-      createdAt
       username
-      reactionCount
-      reactions {
+      email
+      friendCount
+      friends {
         _id
-        createdAt
         username
-        reactionBody
+      }
+      thoughts {
+        _id
+        thoughtText
+        createdAt
+        reactionCount
       }
     }
   }
