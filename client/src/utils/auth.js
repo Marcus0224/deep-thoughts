@@ -15,10 +15,10 @@ class AuthService {
     }
 
     //check if the token has expired
-    isTokenExpired(toekn) {
+    isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if(decode.exp < Date.now() / 1000) {
+            if(decoded.exp < Date.now() / 1000) {
                 return true;
             } else {
                 return false;
