@@ -4,11 +4,24 @@ import Auth from '../utils/auth';
 
 import ThoughtList from '../components/ThoughtList';
 
-import { useQuery } from '@apollo/client';
+import { ADD_FRIEND } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import FriendList from '../components/FriendList';
+import ThoughtForm from '../components/ThoughtForm'
 
 const Profile = () => {
+const [addFriend] = useMutation(ADD_FRIEND);
+
+const handleClick = async () => {
+  try {
+    await addFriend({
+      variables: { id: user._id }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -40,6 +53,11 @@ const Profile = () => {
         <h2 className="bg-dark text-secondary p-3 display-inline-block">
           Viewing {useParams ? `{user.username}'s` : 'your'} profile.
         </h2>
+        {useParams && (
+        <button className='btn ml auto' onClick={handleClick}>
+          add Friend
+        </button>
+        )}
       </div>
 
       <div className="flex-row justify-space-between mb-3">
@@ -55,6 +73,7 @@ const Profile = () => {
           />
         </div>
       </div>
+      <div className='mb-3'>{!useParams && <ThoughtForm />}</div>
     </div>
   );
 };
